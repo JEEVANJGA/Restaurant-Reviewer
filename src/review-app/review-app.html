@@ -10,8 +10,6 @@
 <link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
-<link rel="import" href="sample-content.html">
-
 <meta name="mobile-web-app-capable" content="yes">
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
@@ -116,7 +114,13 @@
                 }
             .selector{
                        width: 63%;
-                }   
+                } 
+            a:focus {
+                   border: 1px solid;
+                   /*border-color:  #404040;*/
+                   box-shadow: 0 0 8px 3px;
+                   rgba(255,255,255,0.8);
+               }  
     </style>
     <!-- paper card styling-->
     <style is="custom-style">
@@ -147,7 +151,7 @@
         </div>
         <div class="bottom filtercontainer ">
               <div class="filteritem">
-                      <paper-dropdown-menu-light label="Cuisine" id="Cu" class="selector" tabindex="1">
+                      <paper-dropdown-menu-light label="Cuisine" aria-label="Select Cuisine to filter" id="Cu" class="selector" tabindex="1">
                         <paper-listbox class="dropdown-content">
                           <paper-item>Indian</paper-item>
                           <paper-item>Chinese</paper-item>
@@ -157,7 +161,7 @@
                       </paper-dropdown-menu-light>
               </div>
               <div class="filteritem">
-                      <paper-dropdown-menu-light label="Rating" id="Ra" class="selector" tabindex="1">
+                      <paper-dropdown-menu-light label="Rating" id="Ra" aria-label="Select Rating to filter" class="selector" tabindex="1">
                         <paper-listbox class="dropdown-content">
                           <paper-item>5</paper-item>
                           <paper-item>4</paper-item>
@@ -174,30 +178,29 @@
         </div>
   </paper-toolbar>
   <div class="content">
-  <div id="notification" align="center"></div>
+      <div id="notification" align="center"></div>
       <template is="dom-bind" id="Restcard">
         <template is="dom-repeat" items="{{searcharray}}">
-            <a  id="[[item.Name]]" data-toggle="modal" href="#myModal" onclick="Modalfunc(id);">
-              <paper-card class="restaurant">
-                <div class="restaurant-content">
+            <a  aria-label='click for more details on [[item.Name]]' id="[[item.Name]]" data-toggle="modal" href='[[item.Name]]/#myModal' onclick="Modalfunc(id);">
+              <paper-card class="restaurant" aria-hidden="true" aria-label='restaurant card of {{item.Name}}'>
+                <div class="restaurant-content" aria-hidden="true" aria-label='restaurant content of {{item.Name}}'>
                   <div class="card-content">
-                  <div class="restaurant-image" style="width:auto;height:150px;background: url('../../images/{{item.img}}');background-size: contain;background-repeat: no-repeat;"></div>
-                    <div class="restaurant-header">{{item.Name}}</div>
-                    <div class="restaurant-descrip">Address: {{item.Address}}</div>
-                    <div class="restaurant-descrip">Contact: {{item.contact}}</div>
-                    <div class="restaurant-descrip"></div>
+                  <div class="restaurant-image" role="img" aria-label=" Restaurant Image of {{item.Name}}" style="width:auto;height:150px;background: url('../../images/{{item.img}}');background-size: contain;background-repeat: no-repeat;"></div>
+                    <div id="{{item.Name}}" class="restaurant-header">{{item.Name}}</div>
+                    <div class="restaurant-descrip" aria-hidden="true">Address: {{item.Address}}</div>
+                    <div class="restaurant-descrip" aria-hidden="true">Contact: {{item.contact}}</div>
                   </div>
                 </div>  
               </paper-card>
             </a>
           <br>
            <!-- Modal -->
-                      <div class="modal fade" id="myModal" role="dialog" tabindex="-1">
+                      <div class="modal fade" id="myModal" role="dialog" aria-labei="Restaurant Modal window" tabindex="-1">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title" id="modhead">Modal Header</h4>
+                              <button type="button" aria-label="close" class="close" data-dismiss="modal">&times;</button>
+                              <h3 class="modal-title" id="modhead">Modal Header</h3>
                             </div>
                             <div class="modal-body">
                               <p id="description"></p>
@@ -226,8 +229,8 @@
                               <h4>Submit Your Review</h4>
                               <hr>
                               <form >
-                                Review: <input type="text" name="usrname" id="inrev">
-                                Rating: <select id="inrat">
+                                Review: <input type="text" name="usrname" id="inrev" aria-label="Enter Your review">
+                                Rating: <select id="inrat" aria-label="Enter Your rating">
                                           <option value="1">1</option>
                                           <option value="2">2</option>
                                           <option value="3">3</option>
@@ -365,8 +368,8 @@
             console.log(Restcard.searcharray);
           }
         if (typeof Restcard.searcharray[0] == 'undefined' && Restcard.searcharray[0] == null){
-          console.log("hello");
-          document.getElementById('notification').innerHTML="<h3>Restaurant's satisfying this constraints are not in the list</h3>";
+          //console.log("hello");
+          document.getElementById('notification').innerHTML="<h3>Restaurant's satisfying these constraints are not in the list</h3>";
         }else document.getElementById('notification').innerHTML=" ";
 
       }
@@ -405,7 +408,6 @@
         document.getElementById("rat").innerHTML="Rating: "+document.getElementById("inrat").value;
       }
   </script>
-    
   </template>
 
   <script>

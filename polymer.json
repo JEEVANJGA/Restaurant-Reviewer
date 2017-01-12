@@ -1,0 +1,13 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/review-app/review-app.html",
+  "sources": [
+    "src/**/*",
+    "images/*"
+  ],
+  "includeDependencies": [
+    "bower.json",
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}review
