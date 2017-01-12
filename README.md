@@ -2,6 +2,9 @@
 
 The application must include restaurant names, a photograph, address and operating hours for each restaurant along with reviews, including the name of the reviewer, date of review, 5-star rating system, and comments. The application must include an application header, a menu providing multiple ways to filter the restaurants. When viewing a specific restaurant, current reviews must be displayed along with a form for the user to submit their own review.
 
+## Demo site
+* https://restaurant-review-app-92192.firebaseapp.com/
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
