@@ -1,6 +1,25 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
+
+<link rel="import" href="../../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu-light.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="sample-content.html">
+
+<meta name="mobile-web-app-capable" content="yes">
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <!-- Bootstrap resources-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <dom-module id="review-app">
   <template>
@@ -9,12 +28,338 @@
         display: block;
       }
     </style>
+    <style is="custom-style">
+          paper-scroll-header-panel {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: var(--paper-orange-100, #eee);
+                /* background for toolbar when it is at its full size */
+                --paper-scroll-header-panel-full-header: {
+                  background-image: url(../../images/web-background.jpg);
+                };
+                /* background for toolbar when it is condensed */
+                --paper-scroll-header-panel-condensed-header: {
+                  background-color: var(--paper-light-black);
+                  background-image: url(../../images/web-background.jpg);
+                };
+              }
+          paper-toolbar {
+                /* custom toolbar height */
+                width: 100%;
+                height: 240px;
+                background-color: transparent;
+                overflow: visible;
+              }
+          paper-dropdown-menu-light{
+                  --paper-dropdown-menu-input: {
+                    border-bottom: 2px dashed #CE3059;
+                  };
+                  --paper-dropdown-menu-color: #E69818;  
+              }
+          
+          paper-button.custom:hover {
+                background-color: #E69818;
+              }
+          paper-button.indigo {
+                  background-color: var(--paper-indigo-500);
+                  color: white;
+                  --paper-button-raised-keyboard-focus: {
+                  background-color: #E69818 !important;
+                  color: white !important;
+                };
+              }
+          .content {
+                padding: 16px 30px 16px 50px;
+              }
+          .logo {
+                   text-align: center;
+               }
+          .logo a {
+                   font-size: 22px;
+                   font-weight: 600;
+                   letter-spacing: 0.3em;
+                   color: #E69818;
+                   text-decoration: none;
+                   /* required for IE 11, so this <a> can receive pointer events */
+                   display: inline-block;
+                   pointer-events: auto;
+               }
+            .logo a:focus {
+                   outline: 1px dotted  #E69818;
+               }
+            .tabcontainer{
+                    width:100%;
+                    height: 98%;
+                    display: flex
+                    flex-flow: row ;
+                    justify-content: space-around;
+               }
+            .filtercontainer{
+                   @apply(--layout-flex);
+                   @apply(--layout-horizontal);
+                   margin-top:5%;
+                   margin-bottom: 15%;
+                   width:100%;
+                   display: flex;
+                   flex-flow: row wrap;
+                   justify-content: space-around;
+                   align-items:  baseline;
+                   align-content: space-around;
+               }
+            .filteritem{
+                    width:40%;
+                    text-align: center;
+                    align-self: center;
+                }
+            .selector{
+                       width: 63%;
+                }   
+    </style>
+    <!-- paper card styling-->
+    <style is="custom-style">
+      paper-card{
+        border: 1px solid #D32B34; padding: 5px; margin: 5px; border-radius: 5px; background-color: #fff; color: #555;
+      }
+      paper-card.restaurant { @apply(--layout-horizontal); }
+      .restaurant-image {
+        width: 30%;height: auto;
+        
+        background: url('../../images/Cherries & Berries.jpg');
+        background-size: contain;background-repeat: no-repeat;
+        
+      }
+      .restaurant-content {
+        @apply(--layout-flex);
+        float: left;
+      }
+      .restaurant-header { @apply(--paper-font-headline); }
+      .restaurant-descrip { color: var(--paper-grey-600); margin: 5px 0; }
+    </style>
+
+  <!-- `keepCondensedHeader` makes the condensed header to not scroll away -->
+  <paper-scroll-header-panel condenses keep-condensed-header header-height="256" condensed-header-height="140">
+  <paper-toolbar>
+        <div class="tabcontainer">              
+        <div class="logo " title align="center"><a tabindex="1" href="." aria-label="Restaurant Reviewer Home">Restaurant Reviewer</a></div>
+        </div>
+        <div class="bottom filtercontainer ">
+              <div class="filteritem">
+                      <paper-dropdown-menu-light label="Cuisine" class="selector" tabindex="1">
+                        <paper-listbox class="dropdown-content">
+                          <paper-item>Indian</paper-item>
+                          <paper-item>Chinese</paper-item>
+                          <paper-item>European</paper-item>
+                          <paper-item>French</paper-item>
+                        </paper-listbox>
+                      </paper-dropdown-menu-light>
+              </div>
+              <div class="filteritem">
+                      <paper-dropdown-menu-light label="Rating" class="selector" tabindex="1">
+                        <paper-listbox class="dropdown-content">
+                          <paper-item>5</paper-item>
+                          <paper-item>4</paper-item>
+                          <paper-item>3</paper-item>
+                          <paper-item>2</paper-item>
+                          <paper-item>1</paper-item>
+                        </paper-listbox>
+                      </paper-dropdown-menu-light>
+              </div>
+              <div class="filteritem">
+
+                      <paper-button raised tabindex="1" class="custom indigo" onclick='search()'>Search<iron-icon icon="maps:restaurant"></iron-icon></paper-button>
+              </div>
+        </div>
+  </paper-toolbar>
+
+    <div class="content">
+      <template is="dom-bind" id="Restcard">
+        <template is="dom-repeat" items="{{array}}">
+            <a  id="[[item.Name]]" data-toggle="modal" href="#myModal" onclick="Modalfunc(id);">
+              <paper-card class="restaurant">
+                <div class="restaurant-content">
+                  <div class="card-content">
+                  <div class="restaurant-image" style="width:auto;height:150px;background: url('../../images/{{item.img}}');background-size: contain;background-repeat: no-repeat;"></div>
+                    <div class="restaurant-header">{{item.Name}}</div>
+                    <div class="restaurant-descrip">Address: {{item.Address}}</div>
+                    <div class="restaurant-descrip">Contact: {{item.contact}}</div>
+                    <div class="restaurant-descrip"></div>
+                  </div>
+                </div>  
+              </paper-card>
+            </a>
+          <br>
+           <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="modhead">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p id="description"></p>
+          <p id="addr"></p>
+          <p id="contact"></p>
+          <p id="operating_hours"></p>
+          <p id="cuisine"></p>
+          <hr>
+          <h4>Reviews</h4>
+          <hr>
+          <p id="reviewer1"></p>
+          <p id="reviewdate1"></p>
+          <p id="review1"></p>
+          <p id="rating1"></p>
+          <hr>
+          <p id="reviewer2"></p>
+          <p id="reviewdate2"></p>
+          <p id="review2"></p>
+          <p id="rating2"></p>
+          <hr>
+          <p id="reviewer3"></p>
+          <p id="reviewdate3"></p>
+          <p id="review3"></p>
+          <p id="rating3"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+        </template>
+      </template>
+
+      <paper-card class="restaurant">
+        <div class="restaurant-image"></div>
+        <div class="restaurant-content">
+          <div class="card-content">
+            <div class="restaurant-header">Restaurant name</div>
+            <div class="restaurant-descrip">description</div>
+            <div class="restaurant-descrip">Address</div>
+            <div class="restaurant-descrip">Contact</div>
+            <div class="restaurant-descrip">rating</div>
+          </div>
+        </div>  
+      </paper-card>
+
+      <sample-content size="0"></sample-content>   
+    </div>
+
+  </paper-scroll-header-panel>
+  <script>
+    //Restcard.array={};
+    Restcard.array=[
+                      { 
+                        "Name":"Dal Roti" ,
+                        "descrip":"",
+                        "img":"dalroti.jpg",
+                        "Address":"Lilly Street, Fort Kochi, Kochi, Kerala 682001, India",
+                        "contact":"+91 80506 12232",
+                        "cuisinetype": "Indian",
+                        "operating_hours":[{"opening":"12 AM","closing":"10 PM"}],
+                        "Reviews": [{"reviewer":"Jaime Ortiz","reviewdate":"28/12/2016","review":"Loved this place. Truly Indian cuisine, very rational prices.","rating":"5"},
+                              {"reviewer":"Anil Kumar","reviewdate":"24/12/2016","review":"Food is excellent. Available in diff choices. Worth the price.","rating":"4"},
+                              {"reviewer":"Scott G Clifford","reviewdate":"09/10/2016","review":"Super popular with the tourist crowd but worth the wait. Happy to cater to kids, mosquito coils burning for protection, and great desserts.","rating":"5"}
+                                 ] 
+                      },
+                      { 
+                        "Name":"Alibaba & 41 Dishes" ,
+                        "descrip":"Quick-fix Malabari food, tandoori and biryanis are specialties at this Indian/Asian fast food joint.",
+                        "img":"alibaba&41dishes.jpg",
+                        "Address":"Main Ave, MIG Housing Society, Panampilly Nagar, Ernakulam, Kerala 682036, India",
+                        "contact":"+91 484 403 5555",
+                        "cuisinetype": "Indian",
+                        "operating_hours":[{"opening":"11:30 AM","closing":"11:30 PM"}],
+                        "Reviews": [{"reviewer":"Bibu Raj","reviewdate":"19/10/2016","review":"The ambience is Good. The menu contains a variety of items .The dishes ordered for me was a choice recomended by the service people and was good.","rating":"5"},
+                              {"reviewer":"Foodie Buddy","reviewdate":"04/09/2016","review":"Great hangout place for family. It's an all time busy restaurant, so if you are looking for a calm peaceful place, then you might be choosing alibaba as a wrong choice. Food is good!! brain fry and ghee rice is a good choice.","rating":"3"},
+                              {"reviewer":"Margaret Lawrence","reviewdate":"03/01/2017","review":"Alibaba special falooda is the best :)","rating":"3"}
+                               ] 
+                      }, 
+                      { 
+                        "Name":"Curry Chatty" ,
+                        "descrip":"Eclectic Keralan, Chinese and Indian menus in a smart space decorated with mirrors and Asian art.",
+                        "img":"curry chatty.jpg",
+                        "Address":"thycaud, near pwd rest house, Thiruvananthapuram, Kerala 695014, India",
+                        "contact":"+91 471 305 5567",
+                        "cuisinetype": "Indian",
+                        "operating_hours":[{"opening":"12 AM","closing":"11:59 PM"}],
+                        "Reviews": [{"reviewer":"Jiji VS","reviewdate":"04/01/2017","review":"Decent food and good ambience.","rating":"3"},
+                              {"reviewer":"Rajesh Kumar","reviewdate":"02/01/2017","review":"Very cozy place. Beautiful interiors, well manerred waiters. Good food.","rating":"4"},
+                              {"reviewer":"Sreejith Mahesan","reviewdate":"24/12/2016","review":"A good restaurant for people who like spicy food.","rating":"4"}
+                               ] 
+                      }, 
+                      { 
+                        "Name":"Chiyang Restaurant" ,
+                        "descrip":"Spacious restaurant specialising in Indianised Chinese cuisine served in a relaxed dining room.",
+                        "img":"Chiyang.png",
+                        "Address":" Mariyambika Building, Madhava Pharmacy Junction, Banerji Rd, Kacheripady, Ernakulam, Kerala 682018, India",
+                        "contact":"+91 484 239 5907",
+                        "cuisinetype": "Chinese",
+                        "operating_hours":[{"opening":" 11:34 AM","closing":"10 PM"}],
+                        "Reviews": [{"reviewer":"Ernest Netto","reviewdate":"24/12/2016","review":"Speaking of the quantity of food served in this restaurant is really amazing","rating":"4"},
+                              {"reviewer":"Ervin George","reviewdate":"09/11/2016","review":"A place to go with your friends or family,  the quality of food is very good. ","rating":"5"},
+                              {"reviewer":"paul joseph","reviewdate":"03/05/2016","review":"One the best Chinese places in Ernakulam.","rating":"4"}
+                               ] 
+                      }, 
+                      { 
+                        "Name":"Golden Dragon" ,
+                        "descrip":"Chinese Restaurant · Palarivattom",
+                        "img":"Golden Dragon.jpg",
+                        "Address":"MKK Nair Rd, Palarivattom, Ernakulam, Kerala 682025, India",
+                        "contact":"+91 484 403 3559",
+                        "cuisinetype": "Chinese",
+                        "operating_hours":[{"opening":"11AM","closing":"11PM"}],
+                        "Reviews": [{"reviewer":"kapil nandakumar","reviewdate":"09/12/2016","review":"The food hast lost its glory here.. The frequent change of employees in the restaurant might be one reason behind it. ","rating":"3"},
+                              {"reviewer":"adwaith biju","reviewdate":"02/11/2016","review":"Golden Dragon Is The One Of The Best Chinese Restaurant In Kochi... ","rating":"5"},
+                              {"reviewer":"Manoj M J","reviewdate":"12/09/2016","review":"Authentic, tasty chinese food, reasonably priced. The chicken fried rice is just yum!","rating":"5"}
+                               ] 
+                      }, 
+                      { 
+                        "Name":"Cherries & Berries" ,
+                        "descrip":"Relaxed European-style cafe serving coffee, light fare and sweet treats in compact quarters.",
+                        "img":"Cherries & Berries.jpg",
+                        "Address":"Carmel Towers, Opposite Cottonhill GHS, Vazhuthacaud, Thiruvananthapuram, Kerala 695014, India",
+                        "contact":"+91 471 273 5433",
+                        "cuisinetype": "European",
+                        "operating_hours":[{"opening":"10 AM","closing":"10 PM"}],
+                        "Reviews": [{"reviewer":"Kavitha Devin","reviewdate":"08/01/2017","review":"Excellent service! Very generous quantity in each plate. Excellent presentation with excellent quality..","rating":"4"},
+                              {"reviewer":"arun marwah","reviewdate":"03/01/2017","review":"Pizza and pasta are awesome. Nice place to spend your time. I would highly recommend this place.","rating":"4"},
+                              {"reviewer":"Ajay Shanker","reviewdate":"19/10/2016","review":"Some good English style food, try pancakes for breakfast from here, friendly staff you can personalize your menu by asking them,  they serve fruit flavpred water free of cost.","rating":"4"}
+                               ] 
+                      }
+                    ];
+    //console.log(Restcard.array);
+      function Modalfunc(a){
+          Modalarray=[];
+          console.log(a);
+          Restcard.array.filter(function(item){if(item.Name==a)
+                                                   Modalarray.push(item);                                            
+                                            });
+            console.log(Modalarray);
+            document.getElementById("modhead").innerHTML=Modalarray[0].Name;
+            document.getElementById("description").innerHTML=Modalarray[0].descrip;
+            document.getElementById("addr").innerHTML="Address : "+Modalarray[0].Address;
+            document.getElementById("contact").innerHTML="Contact : "+Modalarray[0].contact;
+            document.getElementById("cuisine").innerHTML="Cuisine Type : "+Modalarray[0].cuisinetype;
+            document.getElementById("operating_hours").innerHTML="Operating hours : "+Modalarray[0].operating_hours[0].opening+"-"+Modalarray[0].operating_hours[0].closing;
+            document.getElementById("reviewer1").innerHTML="Reviewer : "+Modalarray[0].Reviews[0].reviewer;
+            document.getElementById("reviewdate1").innerHTML="Review Date : "+Modalarray[0].Reviews[0].reviewdate;
+            document.getElementById("review1").innerHTML="Review : "+Modalarray[0].Reviews[0].review;
+            document.getElementById("rating1").innerHTML="Rating : "+Modalarray[0].Reviews[0].rating;
+            document.getElementById("reviewer2").innerHTML="Reviewer : "+Modalarray[0].Reviews[1].reviewer;
+            document.getElementById("reviewdate2").innerHTML="Review Date : "+Modalarray[0].Reviews[1].reviewdate;
+            document.getElementById("review2").innerHTML="Review : "+Modalarray[0].Reviews[1].review;
+            document.getElementById("rating2").innerHTML="Rating : "+Modalarray[0].Reviews[1].rating;
+            document.getElementById("reviewer3").innerHTML="Reviewer : "+Modalarray[0].Reviews[2].reviewer;
+            document.getElementById("reviewdate3").innerHTML="Review Date : "+Modalarray[0].Reviews[2].reviewdate;
+            document.getElementById("review3").innerHTML="Review : "+Modalarray[0].Reviews[2].review;
+            document.getElementById("rating3").innerHTML="Rating : "+Modalarray[0].Reviews[2].rating;
+      }
+  </script>
     
-
-    <h2 align="center">Hello [[prop1]]</h2>
-
-
-
   </template>
 
   <script>

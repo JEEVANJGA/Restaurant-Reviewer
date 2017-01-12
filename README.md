@@ -6,6 +6,10 @@ The application must include restaurant names, a photograph, address and operati
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
 
+## Use bower install
+	Install packages with bower install. Bower installs packages to bower_components/.
+	
+
 ## Viewing Your Application
 
 ```

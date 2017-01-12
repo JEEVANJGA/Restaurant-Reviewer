@@ -15,22 +15,10 @@
     <link rel="import" href="/src/review-app/review-app.html">
   </head>
   <body>
-
-  
-    <paper-header-panel mode="waterfall-tall" tall-class="medium-tall" class="cyan">
-      <paper-toolbar>
-        <span class="title" align="center">Restaurent Reviewer</span>
-      </paper-toolbar>
-    <div class="content"><review-app></review-app></div>
-    </paper-header-panel>
-       
+       <review-app></review-app>
   </body>
   <style type="text/css">
     body {
-    @apply(--layout-inline);
-    @apply(--layout-center-center);
-    @apply(--layout-wrap);
-    margin: 0;
     background-image: url("images/web-background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -38,42 +26,4 @@
     background-position: center; 
     }       
 </style>
- <style is="custom-style">
-       
-      paper-header-panel {
-        float: left;
-        width: 97%;
-        height: 600px;
-        padding-top: 10px;
-        padding-right: 20px;
-        padding-bottom: 0px;
-        padding-left: 20px;
-        @apply(--shadow-elevation-2dp);
-      }
-      .paper-header {
-        height: 60px;
-        font-size: 16px;
-        line-height: 60px;
-        padding: 0 10px;
-        color: white;
-        transition: height 0.2s;
-      }
-       .paper-header.medium-tall {
-        height: 100px;
-        line-height: 50px;
-      }
-      .cover {
-        margin: 60px;
-      }
-      .content {
-        height: 2000px;
-      }
-       .cyan .paper-header {
-        background-color: var(--paper-cyan-500);
-      }
-      .cyan .content {
-        opacity: 0.65;
-        background: linear-gradient(white, #b2ebf2);
-      }
-    </style>
 </html>
