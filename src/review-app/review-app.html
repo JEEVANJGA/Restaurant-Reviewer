@@ -147,7 +147,7 @@
         </div>
         <div class="bottom filtercontainer ">
               <div class="filteritem">
-                      <paper-dropdown-menu-light label="Cuisine" class="selector" tabindex="1">
+                      <paper-dropdown-menu-light label="Cuisine" id="Cu" class="selector" tabindex="1">
                         <paper-listbox class="dropdown-content">
                           <paper-item>Indian</paper-item>
                           <paper-item>Chinese</paper-item>
@@ -157,7 +157,7 @@
                       </paper-dropdown-menu-light>
               </div>
               <div class="filteritem">
-                      <paper-dropdown-menu-light label="Rating" class="selector" tabindex="1">
+                      <paper-dropdown-menu-light label="Rating" id="Ra" class="selector" tabindex="1">
                         <paper-listbox class="dropdown-content">
                           <paper-item>5</paper-item>
                           <paper-item>4</paper-item>
@@ -173,10 +173,10 @@
               </div>
         </div>
   </paper-toolbar>
-
-    <div class="content">
+  <div class="content">
+  <div id="notification" align="center"></div>
       <template is="dom-bind" id="Restcard">
-        <template is="dom-repeat" items="{{array}}">
+        <template is="dom-repeat" items="{{searcharray}}">
             <a  id="[[item.Name]]" data-toggle="modal" href="#myModal" onclick="Modalfunc(id);">
               <paper-card class="restaurant">
                 <div class="restaurant-content">
@@ -192,62 +192,62 @@
             </a>
           <br>
            <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" id="modhead">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p id="description"></p>
-          <p id="addr"></p>
-          <p id="contact"></p>
-          <p id="operating_hours"></p>
-          <p id="cuisine"></p>
-          <hr>
-          <h4>Reviews</h4>
-          <hr>
-          <p id="reviewer1"></p>
-          <p id="reviewdate1"></p>
-          <p id="review1"></p>
-          <p id="rating1"></p>
-          <hr>
-          <p id="reviewer2"></p>
-          <p id="reviewdate2"></p>
-          <p id="review2"></p>
-          <p id="rating2"></p>
-          <hr>
-          <p id="reviewer3"></p>
-          <p id="reviewdate3"></p>
-          <p id="review3"></p>
-          <p id="rating3"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+                      <div class="modal fade" id="myModal" role="dialog" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title" id="modhead">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p id="description"></p>
+                              <p id="addr"></p>
+                              <p id="contact"></p>
+                              <p id="operating_hours"></p>
+                              <p id="cuisine"></p>
+                              <hr>
+                              <h4>Reviews</h4>
+                              <hr>
+                              <p id="reviewer1"></p>
+                              <p id="reviewdate1"></p>
+                              <p id="review1"></p>
+                              <p id="rating1"></p>
+                              <hr>
+                              <p id="reviewer2"></p>
+                              <p id="reviewdate2"></p>
+                              <p id="review2"></p>
+                              <p id="rating2"></p>
+                              <hr>
+                              <p id="reviewer3"></p>
+                              <p id="reviewdate3"></p>
+                              <p id="review3"></p>
+                              <p id="rating3"></p>
+                              <hr>
+                              <h4>Submit Your Review</h4>
+                              <hr>
+                              <form >
+                                Review: <input type="text" name="usrname" id="inrev">
+                                Rating: <select id="inrat">
+                                          <option value="1">1</option>
+                                          <option value="2">2</option>
+                                          <option value="3">3</option>
+                                          <option value="4">4</option>
+                                          <option value="5">5</option>
+                                        </select>
+                                <button type="button" name="Submit" onclick="showreview();">Submit</button>
+                              </form>
+                              <span id="rev"></span><br>
+                              <span id="rat"></span>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
         </template>
-      </template>
-
-      <paper-card class="restaurant">
-        <div class="restaurant-image"></div>
-        <div class="restaurant-content">
-          <div class="card-content">
-            <div class="restaurant-header">Restaurant name</div>
-            <div class="restaurant-descrip">description</div>
-            <div class="restaurant-descrip">Address</div>
-            <div class="restaurant-descrip">Contact</div>
-            <div class="restaurant-descrip">rating</div>
-          </div>
-        </div>  
-      </paper-card>
-
-      <sample-content size="0"></sample-content>   
-    </div>
-
+      </template> 
+  </div>
   </paper-scroll-header-panel>
   <script>
     //Restcard.array={};
@@ -331,9 +331,51 @@
                                ] 
                       }
                     ];
+    Restcard.searcharray=Restcard.array;
     //console.log(Restcard.array);
-      function Modalfunc(a){
+      function search(){
+        
+         var selectedItemcuisine = document.querySelector('#Cu').value; 
+         console.log(selectedItemcuisine);
+         var selectedItemrating = document.querySelector('#Ra').value; 
+         console.log(selectedItemrating);
+
+         if(selectedItemcuisine==undefined && selectedItemrating==undefined)
+          { Restcard.searcharray=[];
+            console.log(Restcard.searcharray);
+            Restcard.searcharray=Restcard.array;
+            console.log(Restcard.searcharray);
+          } else if(selectedItemcuisine==undefined){
+            Restcard.searcharray=[];
+            Restcard.searcharray= Restcard.array.filter(function(item){if(item.Reviews[0].rating==selectedItemrating)
+            return(item);                              
+                                            });
+            console.log(Restcard.searcharray);
+          } else if(selectedItemrating==undefined){
+            Restcard.searcharray=[];
+            Restcard.searcharray= Restcard.array.filter(function(item){if(item.cuisinetype==selectedItemcuisine)
+            return(item);                                 
+                                            });
+            console.log(Restcard.searcharray);
+          } else {
+            Restcard.searcharray=[];
+            Restcard.searcharray= Restcard.array.filter(function(item){if(item.cuisinetype==selectedItemcuisine && item.Reviews[0].rating==selectedItemrating)
+              return(item);                                
+                                            });
+            console.log(Restcard.searcharray);
+          }
+        if (typeof Restcard.searcharray[0] == 'undefined' && Restcard.searcharray[0] == null){
+          console.log("hello");
+          document.getElementById('notification').innerHTML="<h3>Restaurant's satisfying this constraints are not in the list</h3>";
+        }else document.getElementById('notification').innerHTML=" ";
+
+      }
+       function Modalfunc(a){
           Modalarray=[];
+          document.getElementById("rev").innerHTML="";
+          document.getElementById("rat").innerHTML="";
+          document.getElementById("inrev").value="";
+          document.getElementById("inrat").value="";
           console.log(a);
           Restcard.array.filter(function(item){if(item.Name==a)
                                                    Modalarray.push(item);                                            
@@ -357,6 +399,10 @@
             document.getElementById("reviewdate3").innerHTML="Review Date : "+Modalarray[0].Reviews[2].reviewdate;
             document.getElementById("review3").innerHTML="Review : "+Modalarray[0].Reviews[2].review;
             document.getElementById("rating3").innerHTML="Rating : "+Modalarray[0].Reviews[2].rating;
+      } 
+      function showreview(){
+        document.getElementById("rev").innerHTML="Review: "+document.getElementById("inrev").value;
+        document.getElementById("rat").innerHTML="Rating: "+document.getElementById("inrat").value;
       }
   </script>
     
